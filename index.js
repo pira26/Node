@@ -18,8 +18,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
-    console.log(req.body);
-    console.log(req.get('lol'));
 
     let verif = req.get('lol');
     if(verif === 'mdr') {
@@ -29,22 +27,12 @@ app.get('/', (req, res) => {
         res.status(401).send('Sorry cant access');
 });
 
-/*const dataHandler = () => {
-    datas.map(data => {
-        let id = data.id;
-        console.log(id);
-        return id
-    });
-};
-
-dataHandler();
- */
-
 app.route('/movies')
-    .get((req, res) => {
+    .get((req, res, next) => {
         res.status(200).send(datas);
+        next();
     })
-    .post((req, res) => {
+    .post((req, res, next) => {
         datas.title = req.body.title;
         datas.category = req.body.category;
         datas.releaseYear = req.body.releaseYear;
@@ -55,23 +43,54 @@ app.route('/movies')
         datas.rate = req.body.rate;
         datas.lastViewDate = req.body.lastViewDate;
         datas.price = req.body.price;
-        res.send({message: 'movie has been sended'});
+        res.send({message: 'Movie has been sended'});
+        next();
     });
 
 
 app.route('/movies/:id')
-    .patch((req, res) => {
-
-        let id = req.params.id;
-
-        console.log(id);
-        console.log(req.body.title);
-
-        datas[id - 1]['title'] =  req.body.title;
-
+    .get((req, res, next) => {
+        const id = req.params.id;
+        res.status(200).send(datas[id - 1]);
+        //res.status(405).send('Bad request');
+        next();
+    })
+    .patch((req, res, next) => {
+        const id = req.params.id;
+        datas[id - 1].title = req.body.title;
+        datas[id - 1].category = req.body.category;
+        datas[id - 1].releaseYear = req.body.releaseYear;
+        datas[id - 1].poster = req.body.poster;
+        datas[id - 1].directors = req.body.directors;
+        datas[id - 1].actors = req.body.actors;
+        datas[id - 1].synopsis = req.body.synopsis;
+        datas[id - 1].rate = req.body.rate;
+        datas[id - 1].lastViewDate = req.body.lastViewDate;
+        datas[id - 1].price = req.body.price;
+        res.status(200).send('Movie updated');
+        next();
+    })
+    .put((req, res, next) => {
+        const id = req.params.id;
+        datas[id - 1].title = req.body.title;
+        datas[id - 1].category = req.body.category;
+        datas[id - 1].releaseYear = req.body.releaseYear;
+        datas[id - 1].poster = req.body.poster;
+        datas[id - 1].directors = req.body.directors;
+        datas[id - 1].actors = req.body.actors;
+        datas[id - 1].synopsis = req.body.synopsis;
+        datas[id - 1].rate = req.body.rate;
+        datas[id - 1].lastViewDate = req.body.lastViewDate;
+        datas[id - 1].price = req.body.price;
+        res.send({message: 'Movie has been over-writed'});
+        next();
+    })
+    .delete((req, res, next) => {
+        const id = req.params.id;
         console.log(datas[id - 1]);
-
-        res.status(200).send('ok');
+        delete datas[id - 1];
+        res.status(200).send('Movie deleted');
+        //res.status(405).send('Not Allowed');
+        next();
     });
-
 app.listen(3000);
