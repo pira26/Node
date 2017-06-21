@@ -27,6 +27,16 @@ app.get('/', (req, res) => {
         res.status(401).send('Sorry cant access');
 });
 
+/*const dataHandler = () => {
+    datas.map(data => {
+        let id = data.id;
+        console.log(id);
+        return id;
+    });
+ };
+
+dataHandler();*/
+
 app.route('/movies')
     .get((req, res, next) => {
         res.status(200).send(datas);
@@ -43,7 +53,7 @@ app.route('/movies')
         datas.rate = req.body.rate;
         datas.lastViewDate = req.body.lastViewDate;
         datas.price = req.body.price;
-        res.send({message: 'Movie has been sended'});
+        res.send('Movie has been sended');
         next();
     });
 
@@ -52,11 +62,14 @@ app.route('/movies/:id')
     .get((req, res, next) => {
         const id = req.params.id;
         res.status(200).send(datas[id - 1]);
-        //res.status(405).send('Bad request');
+        //res.status(400).send('Bad request');
         next();
     })
     .patch((req, res, next) => {
-        const id = req.params.id;
+        const id = parseInt(req.params.id);
+        console.log(datas[id -1].id, req.body.id, id);
+        //if(datas[id - 1].id !== req.body.id) res.status(400).send('Bad request, you cant edit the id');
+        datas[id - 1].id = id;
         datas[id - 1].title = req.body.title;
         datas[id - 1].category = req.body.category;
         datas[id - 1].releaseYear = req.body.releaseYear;
@@ -72,6 +85,7 @@ app.route('/movies/:id')
     })
     .put((req, res, next) => {
         const id = req.params.id;
+        datas[id - 1].id = req.params.id;
         datas[id - 1].title = req.body.title;
         datas[id - 1].category = req.body.category;
         datas[id - 1].releaseYear = req.body.releaseYear;
