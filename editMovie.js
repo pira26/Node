@@ -1,13 +1,11 @@
 'use strict';
-
-const movies = require('./data').movies;
-const remove = require('./deleteMovie');
-
+Object.defineProperty(exports, "__esModule", { value: true });
+const datas = require("./data");
+const movies = datas.movies;
+const movieToDelete = require("./deleteMovie");
 const edit = (arr, id, obj) => {
-    remove.movieToDelete(movies, id);
+    movieToDelete.remove(movies, id);
     movies.push(obj);
 };
-
-module.exports = {
-    movieToEdit: edit
-};
+exports.edit = edit;
+//# sourceMappingURL=editMovie.js.map

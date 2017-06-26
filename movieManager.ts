@@ -1,5 +1,5 @@
 'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
+
 /*const movie = {
     "id": "test",
     "title": "Test",
@@ -14,7 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
     "price": 15
 };
 */
-const movieKeys = [
+
+const movieKeys: string[] = [
     'id',
     'title',
     'category',
@@ -27,5 +28,7 @@ const movieKeys = [
     'lastViewDate',
     'price'
 ];
-exports.movieKeys = movieKeys;
-//# sourceMappingURL=movieManager.js.map
+
+export {
+    movieKeys
+};

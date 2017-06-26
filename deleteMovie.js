@@ -1,9 +1,7 @@
 'use strict';
-
-const movieToDelete = (arr, id) => {
+Object.defineProperty(exports, "__esModule", { value: true });
+const remove = (arr, id) => {
     delete arr[id - 1];
 };
-
-module.exports = {
-  movieToDelete
-};
+exports.remove = remove;
+//# sourceMappingURL=deleteMovie.js.map

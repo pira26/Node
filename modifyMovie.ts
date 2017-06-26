@@ -1,6 +1,6 @@
 'use strict';
-Object.defineProperty(exports, "__esModule", { value: true });
-const modify = (arr, id, obj) => {
+
+const modify = (arr: string[] | number[], id: number, obj: object) => {
     arr[id - 1].id = id;
     arr[id - 1].title = obj.title;
     arr[id - 1].category = obj.category;
@@ -13,5 +13,7 @@ const modify = (arr, id, obj) => {
     arr[id - 1].lastViewDate = obj.lastViewDate;
     arr[id - 1].price = obj.price;
 };
-exports.modify = modify;
-//# sourceMappingURL=modifyMovie.js.map
+
+export {
+    modify
+};
